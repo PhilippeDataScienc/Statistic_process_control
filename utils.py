@@ -16,10 +16,6 @@ class StatisticProcessControl:
         the path of the csv file containing the variable
     signal : str
         the name of the signal to be processes (default = "mean_ir_pwr")
-    lsl : float
-        lower specification limit of the variable (default = -1)
-    usl : float
-        upper specification limit of the variable (default = 1)
 
     Methods
     -------
@@ -39,11 +35,9 @@ class StatisticProcessControl:
         Calcul le Cp et le Cpk du signal
 
     """
-    def __init__(self, path: str, signal: str = "mean_ir_pwr", lsl: float = -1, usl: float = 1):
+    def __init__(self, path: str, signal: str = "mean_ir_pwr"):
         self.path = path  # csv path
         self.signal = signal  # name of the column to be analyzed in the csv file
-        self.lsl = lsl  # lower signal limit
-        self.usl = usl  # upper signal limit
 
     def csv_to_df(self) -> pd.DataFrame:
         """
@@ -107,9 +101,11 @@ class StatisticProcessControl:
         ax['B'].axhline(np.mean(data[self.signal]), color='r', linestyle='dashed')
         plt.show()
 
-    def calcul_cpk(self) -> tuple:
+    def calcul_cpk(self, lsl: float = -1, usl: float = 1) -> tuple:
         """
         Calcul le Cp et le Cpk du signal
+        lsl : float, lower specification limit of the variable (default = -1)
+        usl : float, upper specification limit of the variable (default = 1)
         :return: Cp et Cpk pour le signal considéré, si la distribution est normale
         """
         normality_check = self.normality_test()
@@ -120,7 +116,7 @@ class StatisticProcessControl:
             data = self.csv_to_df()
             mu = np.mean(data[self.signal])
             sigma = np.std(data[self.signal])
-            cp = (self.usl - self.lsl) / (6 * sigma)
-            cpk = min((self.usl - mu) / (3 * sigma), (mu - self.lsl) / (3 * sigma))
+            cp = (usl - lsl) / (6 * sigma)
+            cpk = min((usl - mu) / (3 * sigma), (mu - lsl) / (3 * sigma))
             print(f"Cp={cp:.3f}, Cpk={cpk:.3f}")
             return cp, cpk
