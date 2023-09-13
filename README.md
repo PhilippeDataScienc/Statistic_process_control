@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Statistic Process Control (SPC) class is designed to assess the capability of a process variable extracted from a CSV file. SPC is a statistical method commonly used in quality control and manufacturing to monitor and analyze process data to ensure it remains within specified limits. This documentation provides detailed information on how to use the SPC class, what it does, and identifies potential vulnerabilities in the code.
+The Statistic Process Control (SPC) class is designed to assess the capability of a process variable extracted from a CSV file. SPC is a statistical method commonly used in quality control and manufacturing to monitor and analyze process data to ensure it remains within specified limits. This documentation provides detailed information on how to use the SPC class, what it does.
 
 ## Prerequisites
 
