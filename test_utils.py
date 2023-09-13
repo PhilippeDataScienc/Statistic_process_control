@@ -102,13 +102,13 @@ class TestCalculCpk(unittest.TestCase):
 
     def test_calcul_cpk_normal_distribution(self):
         spc_normal = StatisticProcessControl(self.normal_csv_path, signal="signal")
-        cp, cpk = spc_normal.calcul_cpk()
+        cp, cpk = spc_normal.get_cpk()
         self.assertIsNotNone(cp)
         self.assertIsNotNone(cpk)
 
     def test_calcul_cpk_non_normal_distribution(self):
         spc_non_normal = StatisticProcessControl(self.non_normal_csv_path, signal="signal")
-        cp, cpk = spc_non_normal.calcul_cpk()
+        cp, cpk = spc_non_normal.get_cpk()
 
         # Assert that cp and cpk are None when distribution is non-normal
         self.assertIsNone(cp)

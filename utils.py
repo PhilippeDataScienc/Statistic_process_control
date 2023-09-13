@@ -101,16 +101,16 @@ class StatisticProcessControl:
         ax['B'].axhline(np.mean(data[self.signal]), color='r', linestyle='dashed')
         plt.show()
 
-    def calcul_cpk(self, lsl: float = -1, usl: float = 1) -> tuple:
+    def get_cpk(self, lsl: float = -1, usl: float = 1) -> tuple:
         """
-        Calcul le Cp et le Cpk du signal
+        Computation of the designated signal Cp and Cpk
         lsl : float, lower specification limit of the variable (default = -1)
         usl : float, upper specification limit of the variable (default = 1)
-        :return: Cp et Cpk pour le signal considéré, si la distribution est normale
+        :return: Cp and Cpk for the given signal if there is a normal distribution, None otherwise
         """
         normality_check = self.normality_test()
         if normality_check == 0:
-            print("la distribution est non normale. Calcul de Cpk non pertinent")
+            print("Non normal signal distribution. Cpk computation not done")
             return None, None
         else:
             data = self.csv_to_df()
