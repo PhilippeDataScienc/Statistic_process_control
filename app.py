@@ -1,40 +1,35 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-from utils import StatisticProcessControl
+from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Change this to a secure secret key
 
-@app.route('/', methods=['GET', 'POST'])
+ALLOWED_EXTENSIONS = {'csv'}
+app.config['UPLOAD_FOLDER'] = 'upload_folder'
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/')
+def home():
+    return render_template('upload_form.html')
+
+
+@app.route('/upload', methods=['POST'])
 def upload_file():
-    selected_column = None
-    columns = []  # Initialize the columns variable
-
-    if request.method == 'POST':
-        # Check if a file was uploaded
-        if 'file' not in request.files:
-            flash('No file part', 'error')
-            return redirect(request.url)
-
+    if 'file' in request.files:
         file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            # Here you should save the file
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return 'File uploaded successfully'
 
-        # Check if the file is empty
-        if file.filename == '':
-            flash('No selected file', 'error')
-            return redirect(request.url)
+    return 'File upload failed'
 
-        # Check if it's a CSV file
-        if not file.filename.endswith('.csv'):
-            flash('File must be in CSV format', 'error')
-            return redirect(request.url)
 
-        # Process the CSV file
-        spc = StatisticProcessControl(file)
-        columns = spc.print_columns()
-
-        if 'selected_column' in request.form:
-            selected_column = request.form['selected_column']
-
-    return render_template('upload.html', columns=columns, selected_column=selected_column)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run()

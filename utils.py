@@ -103,14 +103,14 @@ class StatisticProcessControl:
 
     def get_cpk(self, lsl: float = -1, usl: float = 1) -> tuple:
         """
-        Computation of the designated signal Cp and Cpk
+        Calcul le Cp et le Cpk du signal
         lsl : float, lower specification limit of the variable (default = -1)
         usl : float, upper specification limit of the variable (default = 1)
-        :return: Cp and Cpk for the given signal if there is a normal distribution, None otherwise
+        :return: Cp et Cpk pour le signal considéré, si la distribution est normale
         """
         normality_check = self.normality_test()
         if normality_check == 0:
-            print("Non normal signal distribution. Cpk computation not done")
+            print("la distribution est non normale. Calcul de Cpk non pertinent")
             return None, None
         else:
             data = self.csv_to_df()
