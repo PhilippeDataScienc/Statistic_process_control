@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Dashboard</h2>
+
+{% if data %}
+  <h3>First 5 rows of the first column:</h3>
+  <ul>
+    {% for item in data %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No data available.</p>
+{% endif %}
+
+</body>
+</html>
