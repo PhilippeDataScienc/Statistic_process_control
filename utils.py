@@ -39,6 +39,15 @@ class StatisticProcessControl:
         self.path = path  # csv path
         self.signal = signal  # name of the column to be analyzed in the csv file
 
+    def to_dict(self):
+        # Convert object attributes to a dictionary
+        return {'path': self.path, 'signal': self.signal}
+
+    @classmethod
+    def from_dict(cls, data):
+        # Create an instance of the class from a dictionary
+        return cls(data['path'], data['signal'])
+
     def csv_to_df(self) -> pd.DataFrame:
         """
         transform the csv file into a panda DataFrame
@@ -62,8 +71,9 @@ class StatisticProcessControl:
         :return: print a list of the column names
         """
         csv = pd.read_csv(self.path)
-        print(csv.columns)
-        return list(csv.columns)
+        columns = list(csv.columns)
+        print(columns)
+        return columns
 
     def normality_test(self) -> int:
         """

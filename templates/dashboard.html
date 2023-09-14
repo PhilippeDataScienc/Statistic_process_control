@@ -5,12 +5,15 @@
 <h2>Dashboard</h2>
 
 {% if data %}
-  <h3>First 5 rows of the first column:</h3>
-  <ul>
+  <form action="/process_selection" method="post">
+    <h3>Select an item:</h3>
     {% for item in data %}
-      <li>{{ item }}</li>
+      <label>
+        <input type="radio" name="selected_item" value="{{ item }}"> {{ item }}
+      </label><br>
     {% endfor %}
-  </ul>
+    <input type="submit" value="Submit">
+  </form>
 {% else %}
   <p>No data available.</p>
 {% endif %}
