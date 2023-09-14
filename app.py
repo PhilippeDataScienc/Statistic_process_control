@@ -33,27 +33,34 @@ def upload_file():
             file.save(file_path)
             flash('File uploaded successfully')
 
-            # Create an instance of the SPC class with the CSV file path
-            spc_instance = StatisticProcessControl(file_path)
+            # Read the header row of the CSV file
+            with open(file_path, 'r', newline='') as csv_file:
+                csv_reader = csv.reader(csv_file)
+                header = next(csv_reader)  # Read the first row (header)
 
-            # Store the SPC instance in the session
-            session['spc_instance'] = spc_instance
-            session['spc_instance'] = spc_instance.to_dict()
+            session['file_path'] = file_path
+            session['header'] = header
+
+            # Create an instance of the SPC class with the CSV file path
+            # spc_instance = StatisticProcessControl(file_path)
+            #
+            # # Store the SPC instance in the session
+            # session['spc_instance'] = spc_instance
+            # session['spc_instance'] = spc_instance.to_dict()
 
             # Read the CSV file and extract the first 5 rows of the first column
-            columns = spc_instance.print_columns()
+            # columns = spc_instance.print_columns()
 
-            return redirect(url_for('dashboard', data=columns, spc_instance=spc_instance))
+            return redirect(url_for('dashboard', header=header))
 
     return 'File upload failed'
 
+
 @app.route('/dashboard')
 def dashboard():
-    data = request.args.getlist('data')
-    spc_data = session.get('spc_instance')
-    spc_instance = StatisticProcessControl.from_dict(spc_data)
+    data = request.args.getlist('header')
 
-    return render_template('dashboard.html', data=data, spc_instance=spc_instance)
+    return render_template('dashboard.html', data=data)
 
 
 @app.route('/process_selection', methods=['POST'])
@@ -67,14 +74,17 @@ def process_selection():
 @app.route('/calculate/<selected_item>')
 def calculate(selected_item):
     # Retrieve the SPC instance passed from the previous route
-    spc_data = session.get('spc_instance')
-    spc_instance = StatisticProcessControl.from_dict(spc_data)
+    # spc_data = session.get('spc_instance')
+    # spc_instance = StatisticProcessControl.from_dict(spc_data)
+    file_path = session.get('file_path')
+    spc_instance = StatisticProcessControl(file_path, selected_item)
 
     # Perform the specific calculation based on the selected item
-    result = spc_instance.normality_test() #selected_item
+    result = spc_instance.normality_test()  # selected_item
 
     # You can display the result or perform further actions here
-    return f"Result for {selected_item}: {result}"
+    return render_template('dashboard.html', result=result, selected_item=selected_item)
+    # return f"Result for {selected_item}: {result}"
 
 
 if __name__ == "__main__":
