@@ -31,7 +31,7 @@ class StatisticProcessControl:
     plot_graph()
         plot a series of graphs representing the data distribution
 
-    calcul_cpk()
+    get_cpk()
         Calcul le Cp et le Cpk du signal
 
     """
@@ -77,10 +77,10 @@ class StatisticProcessControl:
                 data = self.csv_to_df()
                 result = stats.shapiro(data[self.signal])
                 if result[1] <= 0.05:
-                    print("distribution non normale")
+                    print("non normal distribution")
                     return 0
                 else:
-                    print("la distribution est normale avec un degré de confiance de 95%")
+                    print("normal distribution with 95% confidence")
                     return 1
             except TypeError:
                 print(f"{self.signal} not in index, please choose a correct signal: see print_column() method")
@@ -103,14 +103,14 @@ class StatisticProcessControl:
 
     def get_cpk(self, lsl: float = -1, usl: float = 1) -> tuple:
         """
-        Calcul le Cp et le Cpk du signal
+        Compute Cp and le Cpk of the signal
         lsl : float, lower specification limit of the variable (default = -1)
         usl : float, upper specification limit of the variable (default = 1)
-        :return: Cp et Cpk pour le signal considéré, si la distribution est normale
+        :return: (Cp,Cpk) tuple for the given signal if the signal distribution is normal. (None, None) otherwise
         """
         normality_check = self.normality_test()
         if normality_check == 0:
-            print("la distribution est non normale. Calcul de Cpk non pertinent")
+            print("Non normal distribution. Cpk compute non pertinent")
             return None, None
         else:
             data = self.csv_to_df()
