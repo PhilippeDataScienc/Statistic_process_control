@@ -1,6 +1,6 @@
 # Flask app website for Statistic Process Control
 
-![Website Screenshot](printscreen/result.jpg)
+![Website Screenshot](printscreen/result.JPG)
 
 ## Description
 
@@ -21,16 +21,16 @@ To run, simply install flask `pip install flask` and type flask run in the Termi
 ## Screenshots
 
 Upload
-![upload Screenshot](printscreen/upload.jpg)
+![upload Screenshot](printscreen/upload.JPG)
 
 Select variables
-![variables Screenshot](printscreen/selection.jpg)
+![variables Screenshot](printscreen/selection.JPG)
 
 See the beautiful results
-![result Screenshot](printscreen/result.jpg)
+![result Screenshot](printscreen/result.JPG)
 
 Select variables
-![new_compute Screenshot](printscreen/new_compute.jpg)
+![new_compute Screenshot](printscreen/new_compute.JPG)
 
 
 ## To do / remaining
