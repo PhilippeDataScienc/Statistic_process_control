@@ -8,27 +8,23 @@
 <body>
 
 <div class="container mt-5">
-    <h2 class="text-center">Computation Result</h2>
+    <h2 class="text-center">SPC results for the {{ selected_item }}</h2>
 
-    <!-- Display header data if available -->
-    {% if data %}
-        <h3>Header Data:</h3>
-        <ul>
-            {% for item in data %}
-                <li>{{ item }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <!-- Display the computation result in an alert component -->
+    <div class="alert {% if result == 1 %}alert-success{% else %}alert-danger{% endif %}" role="alert">
+        <h3 class="mt-4">Result:</h3>
+        <p>{{ result }}</p>
+    </div>
 
-    <!-- Display the computation result -->
-    <h3 class="mt-4">Result:</h3>
-    <p>{{ result }}</p>
-
-    <!-- Display the graph if available -->
-    {% if graph_base64 %}
-        <h3 class="mt-4">Graph:</h3>
-        <img src="data:image/png;base64,{{ graph_base64 }}" alt="Graph" class="img-fluid">
-    {% endif %}
+    <!-- Display the graph if available without scrolling -->
+    <div class="row">
+        <div class="col-md-12">
+            {% if graph_base64 %}
+                <h3 class="mt-4">Graph:</h3>
+                <img src="data:image/png;base64,{{ graph_base64 }}" alt="Graph" class="img-fluid">
+            {% endif %}
+        </div>
+    </div>
 
     <!-- Link to return to the dashboard with Bootstrap styling -->
     <form action="/dashboard" method="get">
