@@ -12,7 +12,7 @@
 
     <!-- Display the computation result in an alert component -->
     <div class="alert {% if result == 1 %}alert-success{% else %}alert-danger{% endif %}" role="alert">
-        <h3 class="mt-4">Result:</h3>
+        <h3 class="mt-4">Normality test (0: Non normal, 1:Normal):</h3>
         <p>{{ result }}</p>
     </div>
 
@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-md-12">
             {% if graph_base64 %}
-                <h3 class="mt-4">Graph:</h3>
+                <h3 class="mt-4">{{ selected_item }} Histogram and distribution:</h3>
                 <img src="data:image/png;base64,{{ graph_base64 }}" alt="Graph" class="img-fluid">
             {% endif %}
         </div>
@@ -28,7 +28,7 @@
 
     <!-- Link to return to the dashboard with Bootstrap styling -->
     <form action="/dashboard" method="get">
-        <button type="submit" class="btn btn-primary mt-4">Back to Dashboard</button>
+        <button type="submit" class="btn btn-primary mt-4">Back to variable selction</button>
     </form>
 </div>
 

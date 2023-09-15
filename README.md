@@ -1,4 +1,46 @@
-# Statistic Process Control (SPC) Documentation
+# Flask app website for Statistic Process Control
+
+![Website Screenshot](printscreen/result.jpg)
+
+## Description
+
+A website where:
+* you upload your data (csv file)
+* you select the variable you want to analyze
+* you have a displayed result (using the Statistic Process Control (SPC) class developped for it and provided)
+* you can restart with another variable
+
+To run, simply install flask `pip install flask` and type flask run in the Terminal
+
+## Features
+
+- Analyze *YOUR* data
+- Unlimited fun
+- ...
+
+## Screenshots
+
+Upload
+![upload Screenshot](printscreen/upload.jpg)
+
+Select variables
+![variables Screenshot](printscreen/selection.jpg)
+
+See the beautiful results
+![result Screenshot](printscreen/result.jpg)
+
+Select variables
+![new_compute Screenshot](printscreen/new_compute.jpg)
+
+
+## To do / remaining
+
+* Improve UI
+* Implement Cp/Cpk display 
+* Improve the quality of the graphs (legends, sigmas...)
+
+
+# Statistic Process Control (SPC) Class Documentation
 
 ## Introduction
 
