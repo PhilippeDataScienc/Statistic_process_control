@@ -1,3 +1,10 @@
+* I have developed a Class for make computation of Statistic Process Control over an object, and I wanted to implement it into a website.
+* Indeed, I used the Flask Framework to do it.
+* You can see here the result of my project.
+
+All of this work is a side project of mine.
+Hope you enjoy it.
+
 # Flask app website for Statistic Process Control
 
 ![Website Screenshot](printscreen/result.JPG)
@@ -10,7 +17,7 @@ A website where:
 * you have a displayed result (using the Statistic Process Control (SPC) class developped for it and provided)
 * you can restart with another variable
 
-To run, simply install flask `pip install flask` and type flask run in the Terminal
+To run, simply install flask `pip install flask` and type `flask run` in the Terminal
 
 ## Features
 
@@ -29,7 +36,7 @@ Select variables
 See the beautiful results
 ![result Screenshot](printscreen/result.JPG)
 
-Select variables
+Make a new computation
 ![new_compute Screenshot](printscreen/new_compute.JPG)
 
 
