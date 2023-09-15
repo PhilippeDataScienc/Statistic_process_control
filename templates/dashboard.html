@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Dashboard</title>
+</head>
 <body>
 
 <h2>Dashboard</h2>
@@ -18,29 +21,18 @@
   <p>No data available.</p>
 {% endif %}
 
-<!-- Display the calculation result in a red or green card -->
+<!-- Display the computation result and graph if available -->
 {% if result is defined %}
-  <div>
-    {% if result == 0 %}
-      <div style="background-color: red; color: white; padding: 10px; border-radius: 5px; text-align: center;">
-        Result for {{ selected_item }}: {{ result }}
-      </div>
-    {% elif result == 1 %}
-      <div style="background-color: green; color: white; padding: 10px; border-radius: 5px; text-align: center;">
-        Result for {{ selected_item }}: {{ result }}
-      </div>
-    {% endif %}
-  </div>
+  <h3>Computation Result:</h3>
+  <p>{{ result }}</p>
 
-<!-- Display the graph if available -->
   {% if graph_base64 %}
-    <div>
-      <img src="data:image/png;base64,{{ graph_base64 }}" alt="Graph">
-    </div>
+    <h3>Graph:</h3>
+    <img src="data:image/png;base64,{{ graph_base64 }}" alt="Graph">
   {% endif %}
 
   <!-- "New Compute" button that allows you to select another item -->
-  <form action="/dashboard" method="get">
+  <form action="/compute" method="get">
     <input type="submit" value="New Compute">
   </form>
 {% endif %}

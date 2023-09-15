@@ -74,8 +74,9 @@ def process_selection():
     return redirect(url_for('calculate', selected_item=selected_item, data=data))
 
 
-@app.route('/calculate/<selected_item>')
-def calculate(selected_item):
+# New route for computing
+@app.route('/compute/<selected_item>')
+def compute(selected_item):
     # Retrieve the file path passed from the previous route
     file_path = session.get('file_path')
     data = session.get('header', [])
@@ -94,8 +95,12 @@ def calculate(selected_item):
     with open(graph_file, 'rb') as image_file:
         graph_base64 = base64.b64encode(image_file.read()).decode('utf-8')
 
-    return render_template('dashboard.html', result=result, data=data, graph_base64=graph_base64)
+    return render_template('compute_result.html', result=result, data=data, graph_base64=graph_base64)
 
+@app.route('/calculate/<selected_item>')
+def calculate(selected_item):
+    # Redirect to the new computation route
+    return redirect(url_for('compute', selected_item=selected_item))
 
 if __name__ == "__main__":
     app.run()

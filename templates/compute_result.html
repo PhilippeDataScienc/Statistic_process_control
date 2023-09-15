@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compute Result</title>
+</head>
+<body>
+
+<h2>Computation Result</h2>
+
+{% if data %}
+    <p>Header Data:</p>
+    <ul>
+        {% for item in data %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<h3>Result:</h3>
+<p>{{ result }}</p>
+
+{% if graph_base64 %}
+    <h3>Graph:</h3>
+    <img src="data:image/png;base64,{{ graph_base64 }}" alt="Graph">
+{% endif %}
+
+<!-- Link to return to the dashboard -->
+<form action="/dashboard" method="get">
+    <input type="submit" value="Back to Dashboard">
+</form>
+
+</body>
+</html>
