@@ -3,6 +3,8 @@ from werkzeug.utils import secure_filename
 import os
 import csv
 from utils import StatisticProcessControl
+import base64
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
@@ -58,7 +60,7 @@ def upload_file():
 
 @app.route('/dashboard')
 def dashboard():
-    data = request.args.getlist('header')
+    data = session.get('header', [])
 
     return render_template('dashboard.html', data=data)
 
@@ -66,25 +68,33 @@ def dashboard():
 @app.route('/process_selection', methods=['POST'])
 def process_selection():
     selected_item = request.form.get('selected_item')
+    data = session.get('header', [])
 
     # Redirect to the route for calculations with the selected item as a parameter
-    return redirect(url_for('calculate', selected_item=selected_item))
+    return redirect(url_for('calculate', selected_item=selected_item, data=data))
 
 
 @app.route('/calculate/<selected_item>')
 def calculate(selected_item):
-    # Retrieve the SPC instance passed from the previous route
-    # spc_data = session.get('spc_instance')
-    # spc_instance = StatisticProcessControl.from_dict(spc_data)
+    # Retrieve the file path passed from the previous route
     file_path = session.get('file_path')
+    data = session.get('header', [])
     spc_instance = StatisticProcessControl(file_path, selected_item)
 
     # Perform the specific calculation based on the selected item
-    result = spc_instance.normality_test()  # selected_item
+    result = spc_instance.normality_test()
 
-    # You can display the result or perform further actions here
-    return render_template('dashboard.html', result=result, selected_item=selected_item)
-    # return f"Result for {selected_item}: {result}"
+    # Generate and save the graph
+    graph = spc_instance.plot_graph()
+    graph_file = 'static/graph.png'  # Choose a path to save the graph
+    graph.savefig(graph_file)
+    plt.close(graph)  # Close the figure to free up resources
+
+    # Encode the graph as base64
+    with open(graph_file, 'rb') as image_file:
+        graph_base64 = base64.b64encode(image_file.read()).decode('utf-8')
+
+    return render_template('dashboard.html', result=result, data=data, graph_base64=graph_base64)
 
 
 if __name__ == "__main__":

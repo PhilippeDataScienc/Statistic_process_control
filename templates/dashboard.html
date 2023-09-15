@@ -32,6 +32,13 @@
     {% endif %}
   </div>
 
+<!-- Display the graph if available -->
+  {% if graph_base64 %}
+    <div>
+      <img src="data:image/png;base64,{{ graph_base64 }}" alt="Graph">
+    </div>
+  {% endif %}
+
   <!-- "New Compute" button that allows you to select another item -->
   <form action="/dashboard" method="get">
     <input type="submit" value="New Compute">

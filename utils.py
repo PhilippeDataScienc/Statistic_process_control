@@ -98,18 +98,23 @@ class StatisticProcessControl:
 
     def plot_graph(self) -> plt:
         """
-        plot a series of graphs representing the data distribution
-        :return: an histogram with a mean, and a scatter graph with the mean
+        Plot a series of graphs representing the data distribution.
+        :return: a Matplotlib figure containing the graphs
         """
         data = self.csv_to_df()
-        fig = plt.figure()
-        ax = fig.subplot_mosaic("""A
-        B""")
-        ax['A'].hist(data[self.signal], alpha=0.5)
-        ax['A'].axvline(np.mean(data[self.signal]), color='r', linestyle='dashed')
-        ax['B'].scatter(data["layer"], data[self.signal], alpha=0.5)
-        ax['B'].axhline(np.mean(data[self.signal]), color='r', linestyle='dashed')
-        plt.show()
+        fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+
+        # First subplot: Histogram
+        ax[0].hist(data[self.signal], alpha=0.5)
+        ax[0].axvline(np.mean(data[self.signal]), color='r', linestyle='dashed')
+        ax[0].set_title('Histogram')
+
+        # Second subplot: Scatter Plot
+        ax[1].scatter(data["layer"], data[self.signal], alpha=0.5)
+        ax[1].axhline(np.mean(data[self.signal]), color='r', linestyle='dashed')
+        ax[1].set_title('Scatter Plot')
+
+        return fig
 
     def get_cpk(self, lsl: float = -1, usl: float = 1) -> tuple:
         """
