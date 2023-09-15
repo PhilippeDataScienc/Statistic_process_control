@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Upload File</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
 <body>
 
-<h2>Upload File</h2>
-<form action = "/upload" method = "POST"
-   enctype = "multipart/form-data">
-   <input type = "file" name = "file" />
-   <input type = "submit"/>
-</form>
+<div class="container mt-5">
+    <h2 class="text-center">Upload File</h2>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <input type="file" class="form-control-file" name="file">
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>
+
+<!-- Include Bootstrap JavaScript (optional) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
